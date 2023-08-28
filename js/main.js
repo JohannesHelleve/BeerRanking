@@ -1,9 +1,10 @@
 const myButton = document.getElementById('myButton')
 myButton.addEventListener('click', onClickGetProducts)
 
+//Hansa EAN: 7030019532615
 async function getProducts(product) {
     try {
-        const search = 'https://kassal.app/api/v1/products/ean/' + product
+        const search = 'https://kassal.app/api/v1/products/ean/'+ product 
         const response = await fetch(search, {
             headers: {
                 Authorization: 'Bearer Xeii429PZ59IwlikFPzMDxQbI8sYzSjq4J5PiqHp'
@@ -23,16 +24,26 @@ async function getProducts(product) {
 
 function getListProducts(data) {
     const listProducts = []
-    for(let product in data) {
-        console.log(data.products[product])
-        listProducts.push(data.products[product].name + ' ' + data.products[product].price)
+    for(let i = 0; i < data.products.length; i++) {
+        console.log(data.products[i].current_price)
+        console.log(data.products[i].name)
+        if(data.products[i].current_price != null) {
+            listProducts.push([data.products[i].current_price.price, data.products[i].store.name])
+        }
     }
-    return listProducts
+    let byPrice = listProducts.slice(0);
+    byPrice.sort(function(a, b) {  
+        return a[0] - b[0];
+    });
+    const byPriceInfo = {list : byPrice, name : data.products[0].name}
+    
+    return byPriceInfo
 }
 
 async function onClickGetProducts() {
     let input = document.getElementById("input").value;
     let products = await getProducts(input);
     let listProducts = getListProducts(products);
-    document.getElementById("output").innerHTML = listProducts.join('<br>');
+    document.getElementById("name").innerHTML = listProducts.name;
+    document.getElementById("results").innerHTML = listProducts.list.join("<br>");
 }

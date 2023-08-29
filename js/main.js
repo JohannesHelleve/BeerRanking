@@ -2,6 +2,7 @@ const myButton = document.getElementById('myButton')
 myButton.addEventListener('click', onClickGetProducts)
 
 //Hansa EAN: 7030019532615
+
 async function getProducts(product) {
     try {
         const search = 'https://kassal.app/api/v1/products/ean/'+ product 
@@ -46,4 +47,23 @@ async function onClickGetProducts() {
     let listProducts = getListProducts(products);
     document.getElementById("name").innerHTML = listProducts.name;
     document.getElementById("results").innerHTML = listProducts.list.join("<br>");
+}
+
+//Create a dynamic dropdown menu
+var values = ["dog", "cat", "parrot", "rabbit"];
+
+var select = document.getElementById("dropDown")
+console.log(select)
+
+for (const val of values) {
+  var option = document.createElement("option");
+  option.value = val;
+  option.text = val.charAt(0).toUpperCase() + val.slice(1);
+  select.appendChild(option);
+}
+
+document.getElementById("dropDown").appendChild(label).appendChild(select);
+
+function createJson(){
+    
 }

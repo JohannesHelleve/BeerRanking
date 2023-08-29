@@ -1,0 +1,14 @@
+{
+    "name": "Hansa",
+    "ean" : "7030019532615",
+    "data":{
+        "1":{
+            "name":"Kiwi",
+            "price": 10
+        },
+        "2":{
+            "name":"Banan",
+            "price": 20
+        },
+    }
+}

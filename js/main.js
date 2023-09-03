@@ -1,5 +1,7 @@
+//import data.json from './data.json' assert { type: "json" };
 const myButton = document.getElementById('myButton')
 myButton.addEventListener('click', onClickGetProducts)
+
 
 //Hansa EAN: 7030019532615
 
@@ -14,7 +16,7 @@ async function getProducts(product) {
         if (response.ok) {
             const object = await response.json()
             console.log(object)
-            return object.data
+            return object.products.data
         } else {
             throw new Error('Response not ok')
         }
@@ -24,10 +26,9 @@ async function getProducts(product) {
 }
 
 function getListProducts(data) {
+    data = getProducts(data)
     const listProducts = []
     for(let i = 0; i < data.products.length; i++) {
-        console.log(data.products[i].current_price)
-        console.log(data.products[i].name)
         if(data.products[i].current_price != null) {
             listProducts.push([data.products[i].current_price.price, data.products[i].store.name])
         }
@@ -41,6 +42,7 @@ function getListProducts(data) {
     return byPriceInfo
 }
 
+
 async function onClickGetProducts() {
     let input = document.getElementById("input").value;
     let products = await getProducts(input);
@@ -51,21 +53,27 @@ async function onClickGetProducts() {
 
 //Create a dynamic dropdown menu
 var values = ["dog", "cat", "parrot", "rabbit"];
+var ean = [
+  7030019532615,
+  "7044610048543",
+]
 
 var select = document.getElementById("dropDown")
-console.log(select)
 
-for (const val of values) {
+for (const val of ean) {
+  console.log(val);
+  let test = getProducts(val);
+  console.log(test);
+  let product = getListProducts(test).name;
   var option = document.createElement("option");
   option.value = val;
   option.text = val.charAt(0).toUpperCase() + val.slice(1);
   select.appendChild(option);
 }
 
-document.getElementById("dropDown").appendChild(label).appendChild(select);
 
 function createJson(){
-    
+    let input = document.getElementById("input2").value;
+    getListProducts(input);
 }
 
-//get code from mongodb

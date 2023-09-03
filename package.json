@@ -1,5 +1,19 @@
 {
+  "name": "beerranking",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon main.js"
+    },
+  "keywords": [],
+  "author": "",
+  "license": "ISC", 
   "dependencies": {
+    "express": "^4.18.2",
     "mongodb": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

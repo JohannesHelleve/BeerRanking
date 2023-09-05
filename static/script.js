@@ -1,32 +1,9 @@
-//import data.json from './data.json' assert { type: "json" };
 const myButton = document.getElementById('myButton')
 myButton.addEventListener('click', onClickGetProducts)
 
-
-//Hansa EAN: 7030019532615
-
-async function getProducts(product) {
-    try {
-        const search = 'https://kassal.app/api/v1/products/ean/'+ product 
-        const response = await fetch(search, {
-            headers: {
-                Authorization: 'Bearer Xeii429PZ59IwlikFPzMDxQbI8sYzSjq4J5PiqHp'
-            }
-        })
-        if (response.ok) {
-            const object = await response.json()
-            console.log(object)
-            return object.products.data
-        } else {
-            throw new Error('Response not ok')
-        }
-    } catch (error) {
-        console.log(error)
-    }  
-}
-
-function getListProducts(data) {
-    data = getProducts(data)
+async function getListProducts(ean) {
+    let data = await getProducts(ean)
+    console.log(data)
     const listProducts = []
     for(let i = 0; i < data.products.length; i++) {
         if(data.products[i].current_price != null) {
@@ -52,26 +29,25 @@ async function onClickGetProducts() {
 }
 
 //Create a dynamic dropdown menu
-var values = ["dog", "cat", "parrot", "rabbit"];
 var ean = [
-  7030019532615,
+  "7030019532615",
   "7044610048543",
 ]
 
 var select = document.getElementById("dropDown")
-
-for (const val of ean) {
-  console.log(val);
-  let test = getProducts(val);
-  console.log(test);
-  let product = getListProducts(test).name;
-  var option = document.createElement("option");
-  option.value = val;
-  option.text = val.charAt(0).toUpperCase() + val.slice(1);
-  select.appendChild(option);
+async function dynamicDropDown(ean) {
+  for (const val of ean) {
+    let test = await getListProducts(val);
+    console.log(test);
+    var option = document.createElement("option");
+    option.value = val;
+    option.text = val.charAt(0).toUpperCase() + val.slice(1);
+    document.getElementById("dropdown")[val].option[val] = test.name;
+    select.appendChild(option);
+  }
 }
 
-
+dynamicDropDown(ean);
 function createJson(){
     let input = document.getElementById("input2").value;
     getListProducts(input);

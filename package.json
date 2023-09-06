@@ -2,6 +2,7 @@
   "name": "beerranking",
   "description": "",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "devStart": "nodemon main.js"

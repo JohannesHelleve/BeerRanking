@@ -1,8 +1,9 @@
-const express = require("express");
-const fetch = require("node-fetch");
+import ean from './ean.mjs';
+import express from 'express';
+import fetch from 'node-fetch';
+import { MongoClient, ServerApiVersion } from 'mongodb';
 const app = express();
 const port = 1000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://johanshelleve:lkiI5s9NC0YhPUAX@okayletsgo.fzrvoiq.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
   serverApi: {
@@ -11,10 +12,11 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-
+console.log(ean);
 app.use(express.static("static"));
 app.get("/data", (_req, res) => {
   let test = {test : "test"};
+  run
   res.json(test);
 });
 
@@ -25,7 +27,6 @@ app.listen(port, () => {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

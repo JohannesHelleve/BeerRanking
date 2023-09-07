@@ -1,4 +1,4 @@
-const myButton = document.getElementById('myButton')
+/*const myButton = document.getElementById('myButton')
 myButton.addEventListener('click', onClickGetProducts)
 
 async function getListProducts(ean) {
@@ -53,3 +53,4 @@ function createJson(){
     getListProducts(input);
 }
 
+*/

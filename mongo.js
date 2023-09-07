@@ -18,22 +18,25 @@ async function run(ean) {
     let dbData = [];
     try {
       await client.connect();
-      await client.db("okayletsgo").collection("kjøh").insertMany(data, function(err, res) {
-        if (err) throw err;
-        console.log("1 document inserted");
-        });
+      const collection = client.db("okayletsgo").collection("kjøh");
+      for (const item of data) {
+        await collection.updateOne(
+          { _id: data.indexOf(item) }, // Use a unique identifier field here
+          { $set: item },
+          { upsert: true } // This option will insert if not found, update if found
+        );
+      }
 
-      dbData = await client.db("okayletsgo").collection("kjøh").findOne({}, function(err, result) {
+      dbData = await collection.find({}, function(err, result) {
         if (err) throw err;
-        console.log(result);
-      });
+      }).toArray();
     } finally {
       // Ensures that the client will close when you finish/error
       await client.close();
     }
+    console.log(dbData);
     return dbData;
   }
-console.log(run(ean).catch(console.dir));
 
 async function matchEanToProduct(products) {
     const data = [];
@@ -83,10 +86,10 @@ function sortByPriceProduct(productData) {
 }
 
 
-
-/*(async () => {
-    console.log("hei");
+async function sendData() {
     const data = await run(ean);
-    console.log(data);
-})();
-//export default data;*/
+    return data;
+}
+
+const data = sendData();
+export default data;

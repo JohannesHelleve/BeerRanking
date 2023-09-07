@@ -1,5 +1,5 @@
 import express from 'express';
-import beerData from './beerData.mjs';
+import beerData from './beerData.js';
 
 const app = express();
 const port = 1000;

@@ -1,9 +1,11 @@
 import ean from './ean.mjs';
+//Må endre her
+import {mongoPassword, KassalBearer} from './.env';
 import fetch from 'node-fetch';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 //må lage ny bruker pågrunn av at den er eksponert på github
-const uri = "mongodb+srv://johanshelleve:lkiI5s9NC0YhPUAX@okayletsgo.fzrvoiq.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://johanshelleve:" + mongoPassword + "@okayletsgo.fzrvoiq.mongodb.net/?retryWrites=true&w=majority";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
@@ -34,7 +36,6 @@ async function run(ean) {
       // Ensures that the client will close when you finish/error
       await client.close();
     }
-    console.log(dbData);
     return dbData;
   }
 
@@ -56,7 +57,7 @@ async function getProducts(product) {
         const response = await fetch(search, {
             headers: {
                 //New token because of github
-                Authorization: 'Bearer Xeii429PZ59IwlikFPzMDxQbI8sYzSjq4J5PiqHp'
+                Authorization: 'Bearer ' + KassalBearer
             }
         })
         if (response.ok) {

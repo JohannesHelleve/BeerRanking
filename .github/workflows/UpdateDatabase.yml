@@ -1,0 +1,20 @@
+name: UpdateDatabase
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs at midnight UTC every day
+
+jobs:
+  run-daily-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Environment
+        env:
+          MY_SECRET: ${{ secrets.MONGO_URI }}  # This sets the secret as an environment variable
+
+      - name: Run JavaScript
+        run: node path/to/your-js-file.js

@@ -33,6 +33,8 @@ select.addEventListener("change",async function() {
     if(product._id == selectedOption){
       document.getElementById("name").innerHTML = product.name;
       document.getElementById("list").innerHTML = product.list.join("<br>"); 
+      //legge til nærmeste butikk??
     }
   }
 });
+

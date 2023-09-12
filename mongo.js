@@ -1,11 +1,19 @@
 import ean from './ean.mjs';
-//Må endre her
-import {mongoPassword, KassalBearer} from './.env';
 import fetch from 'node-fetch';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 //må lage ny bruker pågrunn av at den er eksponert på github
-const uri = "mongodb+srv://johanshelleve:" + mongoPassword + "@okayletsgo.fzrvoiq.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.MONGO_URI
+console.log(uri);
+
+if(process.env.test == undefined) {
+  console.log("test is undefined");
+} else {
+  console.log("test is defined");
+}
+
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
@@ -19,7 +27,7 @@ async function run(ean) {
     const data = await matchEanToProduct(ean);
     let dbData = [];
     try {
-      await client.connect();
+      await client.connect()
       const collection = client.db("okayletsgo").collection("kjøh");
       for (const item of data) {
         await collection.updateOne(
@@ -32,7 +40,9 @@ async function run(ean) {
       dbData = await collection.find({}, function(err, result) {
         if (err) throw err;
       }).toArray();
-    } finally {
+    } catch (error) {
+      console.error("Error: " + error.message);
+    }   finally {
       // Ensures that the client will close when you finish/error
       await client.close();
     }
@@ -57,7 +67,7 @@ async function getProducts(product) {
         const response = await fetch(search, {
             headers: {
                 //New token because of github
-                Authorization: 'Bearer ' + KassalBearer
+                Authorization: 'Bearer ' + `${process.env.KASSAL_BEARER}`
             }
         })
         if (response.ok) {
@@ -87,10 +97,7 @@ function sortByPriceProduct(productData) {
 }
 
 
-async function sendData() {
-    const data = await run(ean);
-    return data;
-}
 
-const data = sendData();
+
+const data = await run(ean);
 export default data;

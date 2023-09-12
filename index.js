@@ -1,8 +1,9 @@
 import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 //må lage ny bruker pågrunn av at den er eksponert på github
-const uri = "mongodb+srv://johanshelleve:lkiI5s9NC0YhPUAX@okayletsgo.fzrvoiq.mongodb.net/?retryWrites=true&w=majority";
+const uri = process.env.MONGO_URI
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {

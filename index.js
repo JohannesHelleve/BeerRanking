@@ -13,7 +13,7 @@ const client = new MongoClient(uri, {
     }
   });
 const app = express();
-const port = 1000;
+const port = process.env.port || 1000;
 
 
 app.use(express.static("static"));

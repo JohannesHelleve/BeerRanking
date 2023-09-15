@@ -22,7 +22,7 @@ app.get("/data", async (_req, res) => {
     let test = await run(); // Wait for the asynchronous operation to complete
     res.json(test);
   } catch (error) {
-    res.status(500).send('Internal Server Error'); // Handle errors if the async operation fails
+    res.status(1100).send('Internal Server Error'); // Handle errors if the async operation fails
   }
 });
 

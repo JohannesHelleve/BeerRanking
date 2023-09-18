@@ -1,6 +1,6 @@
 
 async function getData() {
-  const response = await fetch("https://beerranking.vercel.app/data");
+  const response = await fetch("http://localhost:1000/data");
 
   const data = await response.json();
 
@@ -12,7 +12,7 @@ getData();
 //create a dynamic dropdown menu from database
 const select = document.getElementById("dropDown");
 async function createDropDown() {
-const response = await fetch("https://beerranking.vercel.app/data");
+const response = await fetch("http://localhost:1000/data");
 
   const data = await response.json();
 

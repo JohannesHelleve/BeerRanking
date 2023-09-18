@@ -4,7 +4,7 @@ const port = process.env.PORT || 1000;
 
 
 app.use(express.static("static"));
-app.get("/data", async (_req, res) => {
+app.get("/", async (_req, res) => {
   try {
     res.send("Hello World");
   } catch (error) {

@@ -1,10 +1,11 @@
 import express from "express";
 const app = express();
-const port = process.env.PORT || 1000;
+const port = process.env.port || 1000;
 
+//add mongo
 
 app.use(express.static("static"));
-app.get("/", async (_req, res) => {
+app.get("/data", async (_req, res) => {
   try {
     res.send("Hello World");
   } catch (error) {
@@ -18,4 +19,4 @@ app.listen(port, () => {
 
 
 
-module.exports = app;
+export default app;
